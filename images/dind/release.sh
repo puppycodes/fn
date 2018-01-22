@@ -38,7 +38,7 @@ docker push fnproject/dind:release-$DIND_NEW
 docker push fnproject/dind:latest
 
 # Mark this release with a tag
+# No code changes so only the tag requires a push
 git tag -f -a "$DIND_NEW" -m "DIND release $DIND_NEW of $version"
-git push
 git push origin "$DIND_NEW"
 

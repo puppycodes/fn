@@ -23,11 +23,20 @@ clear-images:
 	    docker images "$$i" --format '{{ .ID }}\t{{ .Repository }}\t{{ .Tag}}' | while read id repo tag; do \
 	        if [ "$$tag" = "<none>" ]; then docker rmi "$$id"; else docker rmi "$$repo:$$tag"; fi; done; done
 
+release-fnserver:
+	./release.sh
+
 build-dind:
 	(cd images/dind && ./build.sh)
 
 release-dind:
 	(cd images/dind && ./release.sh)
+
+build-fnlb:
+	(cd fnlb && ./build.sh)
+
+release-fnlb:
+	(cd fnlb && ./release.sh)
 
 fn-test-utils: checkfmt
 	cd images/fn-test-utils && ./build.sh
