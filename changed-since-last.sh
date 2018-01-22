@@ -13,11 +13,6 @@ FN_PREV="$FN_TAG"
 [[ -z "$FN_TAG" ]] && FN_TAG="$FIRST_COMMIT"
 [[ -z "$FN_PREV" ]] && FN_PREV=0.0.0
 
-FNLB_TAG="$(git tag --merged "$RELEASE_BRANCH" --sort='v:refname' 'fnlb-*' | tail -1)"
-FNLB_PREV="$FNLB_TAG"
-[[ -z "$FNLB_TAG" ]] && FNLB_TAG="$FIRST_COMMIT"
-[[ -z "$FNLB_PREV" ]] && FNLB_PREV=0.0.0
-
 DIND_TAG="$(git tag --merged "$RELEASE_BRANCH" --sort='v:refname' 'dind-*' | tail -1)"
 DIND_PREV="$DIND_TAG"
 [[ -z "$DIND_TAG" ]] && DIND_TAG="$FIRST_COMMIT"
@@ -31,9 +26,6 @@ DIND_PREV="$DIND_TAG"
 # DIND bumps only if there are changes under images/dind.
 [[ -n "$(git diff --dirstat=files,0,cumulative "$DIND_TAG" | awk '$2 ~ /^(images\/dind)\/$/')" ]] && DIND_CHANGED=yes
 
-# FNLB bumps only if there are changes under fnlb/ or vendor/
-[[ -n "$(git diff --dirstat=files,0,cumulative "$FNLB_TAG" | awk '$2 ~ /^(fnlb|vendor)\/$/')" ]] && FNLB_CHANGED=yes
-
 # FN bumps only if there are changes *other* than fnlb/ or images/dind/
 [[ -n "$(git diff --dirstat=files,0,cumulative "$FN_TAG" | awk '$2 !~ /^(images\/dind|fnlb)\/$/')" ]] && FN_CHANGED=yes
 
@@ -45,10 +37,6 @@ cat <<-EOF
 	DIND_CHANGED=$DIND_CHANGED
 	DIND_TAG="$DIND_TAG"
 	DIND_PREV="$DIND_PREV"
-
-	FNLB_CHANGED=$FNLB_CHANGED
-	FNLB_TAG="$FNLB_TAG"
-	FNLB_PREV="$FNLB_PREV"
 
 	FN_CHANGED=$FN_CHANGED
 	FN_TAG="$FN_TAG"

@@ -35,7 +35,6 @@ jobs:
       - run: |
           ( ./changed-since-last.sh
             echo "export DIND_CHANGED DIND_TAG DIND_PREV"
-            echo "export FNLB_CHANGED FNLB_TAG FNLB_PREV"
             echo "export FN_CHANGED FN_TAG FN_PREV"
           ) >> $BASH_ENV
 
@@ -44,13 +43,6 @@ jobs:
       - run: |
           if [[ -n "$DIND_CHANGED" ]]; then
             make build-dind
-          fi
-
-      # Rebuild fnlb if necessary
-      # This leaves local docker images around
-      - run: |
-          if [[ -n "$FNLB_CHANGED" ]]; then
-            make build-fnlb
           fi
 
       # Rebuild fnserver if necessary
@@ -68,9 +60,6 @@ jobs:
               git branch --set-upstream-to=origin/${CIRCLE_BRANCH} ${CIRCLE_BRANCH}
               if [[ -n "$DIND_CHANGED" ]]; then
                 make release-dind
-              fi
-              if [[ -n "$FNLB_CHANGED" ]]; then
-                make release-fnlb
               fi
               if [[ -n "$FN_CHANGED" ]]; then
                 make release-fnserver

@@ -32,12 +32,6 @@ build-dind:
 release-dind:
 	(cd images/dind && ./release.sh)
 
-build-fnlb:
-	(cd fnlb && ./build.sh)
-
-release-fnlb:
-	(cd fnlb && ./release.sh)
-
 fn-test-utils: checkfmt
 	cd images/fn-test-utils && ./build.sh
 
